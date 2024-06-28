@@ -10,6 +10,10 @@ class Receiver
         try
         {
             listener.Start();
+            while (true) { 
+            TcpClient client = await listener.AcceptTcpClientAsync();   
+            _ = GetMessage(client);
+            }
 
         }catch (Exception ex)
         {
