@@ -9,8 +9,28 @@ class Receiver
 
         try
         {
+            listener.Start();
 
         }catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+    static async Task GetMessage(TcpClient client)
+    {
+        NetworkStream stream = client.GetStream();
+        StreamReader reader = new StreamReader(stream);
+        try
+        {
+            string message = await reader.ReadLineAsync();
+            if(message != null)
+            {
+                Console.Write(message);
+            }
+            stream.Close();
+            reader.Close();
+            client.Close();
+        }catch(Exception ex)
         {
             Console.WriteLine(ex.Message);
         }
